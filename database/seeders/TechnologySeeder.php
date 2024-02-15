@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
 
 
-class TechnologiesSeeder extends Seeder
+class TechnologySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -45,6 +45,5 @@ class TechnologiesSeeder extends Seeder
             $newTag->color= $faker->safeHexColor();
             $newTag->save();
         }
-
     }
 }
