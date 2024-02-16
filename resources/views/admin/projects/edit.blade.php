@@ -29,6 +29,19 @@
                             <option value="high">High</option>
                         </select>
                     </div>
+                    {{-- Type: --}}
+                    <div class="mb-3 input-group">
+                        <label for="status" class="input-group-text">Type:</label>
+                        <select class="form-select" type="text" name="type_id" id="type_id" >
+                            @foreach ($types as $type)
+                                <option value="{{ $type->id }}"
+                                    style="color: {{ $type->color }}"
+                                    {{ $type->id == old('type_id', $type->type_id) ? 'selected' : '' }}>
+                                        {{ $type->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
 
                     <div class="mb-3 input-group">
                         <label for="budget" class="input-group-text">Budjet:</label>

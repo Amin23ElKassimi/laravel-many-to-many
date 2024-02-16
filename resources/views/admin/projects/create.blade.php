@@ -30,7 +30,7 @@
                         </select>
                     </div>
                     {{-- Type: --}}
-                    <div class="mb-3 input-group">
+                    <div class="mb-3 input-group">  
                         <label for="status" class="input-group-text">Type:</label>
                         <select class="form-select" type="text" name="type_id" id="type_id" >
                             @foreach ($types as $type)
@@ -48,7 +48,7 @@
                             @foreach ($technologies as $technology)
                                 <input class="form-check-input" type="checkbox" name="technologies[]" id="{{ $technology->id }}" value="{{ $technology->id }}"
                                 {{-- ? se il tag su cui sto ciclando e' presente nei tag che ho inviato e ora voglio rivedere come errore, selezionalo, se invece non ho avuto alcun errore, cercalo all'interno della lista dei tag presenti nel mio project --}}
-                                >
+                                > 
                                 <label for="technologies"> {{ $technology->name }}</label>
                             @endforeach
                         </div>

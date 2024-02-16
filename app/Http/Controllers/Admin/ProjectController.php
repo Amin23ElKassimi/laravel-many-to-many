@@ -76,13 +76,15 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,Project $project)
+    public function update(Request $request,Project $project,)
     {
         //
         $data = $request->all();
         $project->update($data);
+        
+        $project->technologies()->sync($data['technologies']);
 
-        return redirect()->route('admin.projects.show', $project);
+        return redirect()->route('admin.projects.show',compact('project'));
 
     }
 
