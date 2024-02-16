@@ -1,12 +1,14 @@
 @extends('layouts.admin')
 
-@section('title', 'Creating a new post')
+@section('title', 'Creating a new project')
 
 @section('main-content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-7">
                 @include('partials.errors')
+                
+                {{-- @dump($technologies->pluck('name')) --}}
 
                 <form action="{{ route('admin.projects.store') }}" method="POST">
                     @csrf
@@ -40,6 +42,17 @@
                             @endforeach
                         </select>
                     </div>
+                    {{-- Technologies --}}
+                    <div class="mb-3 input-group">
+                        <div>
+                            @foreach ($technologies as $technology)
+                                <input class="form-check-input" type="checkbox" name="technologies[]" id="{{ $technology->id }}" value="{{ $technology->id }}"
+                                {{-- ? se il tag su cui sto ciclando e' presente nei tag che ho inviato e ora voglio rivedere come errore, selezionalo, se invece non ho avuto alcun errore, cercalo all'interno della lista dei tag presenti nel mio project --}}
+                                >
+                                <label for="technologies"> {{ $technology->name }}</label>
+                            @endforeach
+                        </div>
+                    </div>
                     {{-- ID_client --}}
                     <div class="mb-3 input-group">
                         <label for="ID_client" class="input-group-text">ID Client</label>
@@ -60,19 +73,19 @@
                         <label for="end_date" class="input-group-text">End Date:</label>
                         <input class="form-control" type="date" name="end_date" id="end_date" value="{{ old('end_date') }}">
                     </div>
-                    {{-- Post image url: --}}
+                    {{-- project image url: --}}
                     <div class="mb-3 input-group">
-                        <label for="view" class="input-group-text">Post image url:</label>
+                        <label for="view" class="input-group-text">project image url:</label>
                         <input class="form-control" type="text" name="view" id="view" value="{{ old('view') }}">
                     </div>
 
                     <div class="mb-3 input-group">
-                        <label for="description" class="input-group-text">Post content:</label>
+                        <label for="description" class="input-group-text">project content:</label>
                         <textarea class="form-control"  name="description" id="description" cols="30" rows="10">{{ old('description')  }}</textarea>
                     </div>
                     <div class="mb-3 input-group">
                         <button type="submit" class="btn btn-xl btn-primary">
-                            Create new post
+                            Create new project
                         </button>
                         <button type="reset" class="btn btn-xl btn-warning">
                             Reset all fields

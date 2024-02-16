@@ -39,6 +39,17 @@
                         <label for="start_date" class="input-group-text">Start Date:</label>
                         <input class="form-control" type="date" name="start_date" id="start_date" value="{{ old('start_date', $project->start_date)}}">
                     </div>
+                                        {{-- Technologies --}}
+                    <div class="mb-3 input-group">
+                        <div>
+                            @foreach ($technologies as $technology)
+                                <input class="form-check-input" type="checkbox" name="technologies[]" id="{{ $technology->id }}" value="{{ $technology->id }}"
+                                {{-- ? se il tag su cui sto ciclando e' presente nei tag che ho inviato e ora voglio rivedere come errore, selezionalo, se invece non ho avuto alcun errore, cercalo all'interno della lista dei tag presenti nel mio project --}}
+                                >
+                                <label for="technologies"> {{ $technology->name }}</label>
+                            @endforeach
+                        </div>
+                    </div>
 
                     <div class="mb-3 input-group">
                         <label for="end_date" class="input-group-text">End Date:</label>

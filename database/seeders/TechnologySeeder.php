@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Technologies;
+use App\Models\Technology;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
@@ -40,7 +40,7 @@ class TechnologySeeder extends Seeder
         ];
 
         foreach ($names as $name){
-            $newTag = new Technologies();
+            $newTag = new Technology();
             $newTag->name = $name;
             $newTag->color= $faker->safeHexColor();
             $newTag->save();
