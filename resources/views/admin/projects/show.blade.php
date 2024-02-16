@@ -12,8 +12,22 @@
                         <h1>
                             {{ $project->name }}
                         </h1>
+                        <ul>
+                            @forelse ($project->technologies as $technology)
+                                <li class="d-inline me-3">
+                                    <span class="badge px-2 px-1" style="background-color: {{ $technology->color }} ">
+                                        {{ $technology->name }}
+                                    </span>
+                                </li>
+            
+                            @empty
+                                <li class="d-inline me-3">
+                                    This post has no tags yet...
+                                </li>
+                            @endforelse
+                        </ul>
                         <p class="text-capitalize">
-                            Stat`us: {{ $project->status }}
+                            Status: {{ $project->status }}
                         </p>
                         <p class="text-capitalize">
                             Type: {{ $project->type->name }}
