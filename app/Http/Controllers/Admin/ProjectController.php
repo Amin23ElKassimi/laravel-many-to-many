@@ -99,4 +99,29 @@ class ProjectController extends Controller
         $project->delete();
         return redirect()->route('admin.projects.index');
     }
+
+    public function deletedIndex(){
+        $projects = Project::onlyTrashed()->get();
+        return view('admin.projects.deleted-index', compact('projects'));
+    }
+
+    // public function deletedShow(string $id){
+    //     $post = Project::withTrashed()->where('id', $id)->first();
+    //     return view('admin.projects.deleted-show', compact('post'));
+    // }
+
+    // public function deletedRestore(string $id){
+    //     $post = Project::withTrashed()->where('id', $id)->first();
+    //     $post->restore();
+
+    //     return redirect()->route('admin.projects.show', $post);
+    // }
+
+    // public function deletedDestroy(string $id){
+    //     $post = Project::withTrashed()->where('id', $id)->first();
+    //     $post->tags()->detach(); // ? rimuovi tutti i collegamenti con me
+    //     $post->forceDelete();
+
+    //     return redirect()->route('admin.projects.deleted.index');
+    // }
 }
