@@ -80,7 +80,7 @@
                         </div>
                         {{--Priority: --}}
                         <div class="mb-3 input-group">
-                            <label for="priority" class="input-group-text">Status:</label>
+                            <label for="priority" class="input-group-text">Priority:</label>
                             <select class="form-select" aria-label="Default select example" name="priority" id="priority" value="{{ old('priority') }}" >
                                 <option selected class="text-capitalize">{{ $project->priority }}</option>
                                 <option value="low">Low</option>

@@ -10,6 +10,21 @@ use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
+    private $rules = [
+        'name' => ['required', 'min:3', 'string', 'max:255'],
+        'description' => [],
+        'status' => [],
+        'view' => ['url', 'required', 'regex:/^https:/'],
+        'start_date' => ['date'],
+        'end_date' => ['date', 'after:start_date'],
+        'ID_client' => [],
+        'budget' => ['numeric'],
+        'priority' => ['string'],
+        'technologies' => [],
+        'type_id' => [],
+
+    ];
+
     /**
      * Display a listing of the resource.
      */
@@ -38,11 +53,14 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        // dd($request->all()['technologies ']);
-        $data = $request->all();
+
         
+        $data = $request->validate($this->rules);
         $project = Project::create($data);
+        
+        if (!isset($data['technologies'])){
+            $data['technologies'] = [];
+        }
         
         $project->technologies()->sync($data['technologies']);
 
@@ -55,10 +73,8 @@ class ProjectController extends Controller
     public function show(string $id)
     {
         //
-
         $project = Project::findOrFail($id);
         $technologies = Technology::findOrFail($id);
-
 
         return view('admin.projects.show', compact('project', 'technologies'));
     }
@@ -82,10 +98,13 @@ class ProjectController extends Controller
     {
         //
         $data = $request->all();
-        $project->update($data);
-        
-        $project->technologies()->sync($data['technologies']);
+        if (!isset($data['technologies'])){
+            $data['technologies'] = [];
+        }
 
+        $project->update($data);
+
+        $project->technologies()->sync($data['technologies']);
         return redirect()->route('admin.projects.show',compact('project'));
 
     }
@@ -111,17 +130,18 @@ class ProjectController extends Controller
     }
 
     public function deletedRestore(string $id){
-        $post = Project::withTrashed()->where('id', $id)->first();
-        $post->restore();
+        $project = Project::withTrashed()->where('id', $id)->first();
+        $project->restore();
 
-        return redirect()->route('admin.projects.show', $post);
+        return redirect()->route('admin.projects.show', $project);
+    }
+    
+    public function deletedDestroy(string $id){
+        $project = Project::withTrashed()->where('id', $id)->first();
+        $project->technologies()->detach(); // ? rimuovi tutti i collegamenti con me
+        $project->forceDelete();
+
+        return redirect()->route('admin.projects.deleted.index');
     }
 
-    // public function deletedDestroy(string $id){
-    //     $post = Project::withTrashed()->where('id', $id)->first();
-    //     $post->tags()->detach(); // ? rimuovi tutti i collegamenti con me
-    //     $post->forceDelete();
-
-    //     return redirect()->route('admin.projects.deleted.index');
-    // }
 }

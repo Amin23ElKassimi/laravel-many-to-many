@@ -21,7 +21,7 @@ class Project extends Model
         'client_id',
         'budget',
         'priority',
-        'type_id'
+        'type_id',
     ];
 
 // Esattamente come nella relazione One to One, nel Model secondario mappiamo la relazione inversa usando il metodo belongsTo().
